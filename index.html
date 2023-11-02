@@ -23,7 +23,7 @@
     <main class="container">
         <div class="row">
             <!-- First column, quarter of the page, contains city search form -->
-            <div class="col-md-3">
+            <div class="col-md-3" id="city-search">
                 <h3>Search for a city:</h3>
                 <form id="city-form">
                     <input type="text" id="city" name="city" placeholder="Prague">
@@ -37,9 +37,9 @@
                 <!-- box for current day -->
                 <div class="current-forecast">
                     <h2 id="current"></h2>
-                    <p id="current-temp">Temp: </p>
-                    <p id="current-wind">Wind: </p>
-                    <p id="current-humidity">Humidity: </p>
+                    <p id="day-0-temp">Temp: </p>
+                    <p id="day-0-wind">Wind: </p>
+                    <p id="day-0-humidity">Humidity: </p>
                 </div>
                 <!-- five day forecast header and columns, no horizontal padding -->
                 <div class="container px-0">

@@ -1,8 +1,8 @@
 // Use jquery to get elements from the page
 var formEl = $('#city-form');
-// added css to keep city names capitalized
 var cityEl = $('input[name="city"]').css("text-transform", "capitalize");
 var currentEl = $('#current');
+var citySearchEl = $('#city-search')
 
 // function that takes in latitude and longitude to display current weather and 5-day forecast
 function displayForecast(lat, lon) {
@@ -11,16 +11,18 @@ function displayForecast(lat, lon) {
         return(response.json());
     })
     .then(function (data) {
-        // current weather data
-        $('#current-temp').append(data.list[0].main.temp + "°F");
-        $('#current-wind').append(data.list[0].wind.speed + " MPH");
-        $('#current-humidity').append(data.list[0].main.humidity + "%");
 
-        // 5 day forecast
-        for(i = 1; i < 6; i++){
-            $('#day-' + i + '-temp').append(data.list[8*i-1].main.temp + "°F");
-            $('#day-' + i + '-wind').append(data.list[8*i-1].wind.speed + " MPH");
-            $('#day-' + i + '-humidity').append(data.list[8*i-1].main.humidity + "%")
+        // current weather data and 5 day forecast
+        for(i = 0; i < 6; i++){
+            if (i === 0) {
+                var x = 0;
+            } else {
+                var x = 8*i-1;
+            }
+
+            $('#day-' + i + '-temp').append(data.list[x].main.temp + "°F");
+            $('#day-' + i + '-wind').append(data.list[x].wind.speed + " MPH");
+            $('#day-' + i + '-humidity').append(data.list[x].main.humidity + "%")
         }
     }
     );
@@ -32,10 +34,63 @@ function getLatAndLon(city){
     // get the latitude and longitude
     fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&appid=a3b8266a3ce273e91f4876eaa66f854a')
     .then(function (response) {
-        return(response.json());
+        return(response.json())
     })
     .then(function (data) {
-        displayForecast(data[0].lat, data[0].lon);
+
+        if(data[0] !== undefined){
+
+            if (localStorage.getItem("cityList") !== null) {
+                var cityArray = JSON.parse(localStorage.getItem("cityList"));
+                
+                // convert all cities in array to lowercase for comparison,
+                // so that there's only one button for each city regardless of capitalization
+                var lowerCaseCities = [];
+
+                for (i = 0; i < cityArray.length; i++) {
+                    lowerCaseCities.push(cityArray[i].toLowerCase());
+                }
+
+                if (!lowerCaseCities.includes(city.toLowerCase())) {
+
+                    var cityButton = $('<button>');
+
+                    cityButton.text(city).css("text-transform", "capitalize");
+                    cityButton.addClass("btn btn-sm custom-btn my-1 city-button");
+
+                    citySearchEl.append(cityButton);
+                    cityButtonFunctional();
+
+                    cityArray.push(city);
+                    localStorage.setItem("cityList", JSON.stringify(cityArray));
+                }
+
+            } else {
+
+                var cityButton = $('<button>');
+
+                cityButton.text(city).css("text-transform", "capitalize");
+                cityButton.addClass("btn btn-sm custom-btn my-1 city-button");
+
+                citySearchEl.append(cityButton);
+                cityButtonFunctional();
+
+                var cityArray = [];
+                cityArray.push(city);
+
+                localStorage.setItem("cityList", JSON.stringify(cityArray));
+
+            }
+
+            clearValues();
+            currentEl.text(city + dayjs().format(" (MM/D/YYYY)")).css("text-transform", "capitalize");
+
+            displayForecast(data[0].lat, data[0].lon);
+        } else {
+            console.log("Couldn't find that city!")
+        }
+
+        
     }
     );
 }
@@ -82,17 +137,63 @@ fetch('https://api.ipgeolocation.io/ipgeo?apiKey=a1d419df10e64b8e9710e164ca9b610
     }
 );
 
+function clearValues(){
+    for(i = 0; i < 6; i++){
+        $('#day-' + i + '-temp').text("Temp: ");
+        $('#day-' + i + '-wind').text("Wind: ");
+        $('#day-' + i + '-humidity').text("Humidity: ");
+    }
+}
+
+function initPrevSearchButtons(){
+    // get city list out of storage and add buttons
+    if (localStorage.getItem("cityList") !== null) {
+        var cityArray = JSON.parse(localStorage.getItem("cityList"));
+        //add buttons
+        for (i = 0; i < cityArray.length; i++){
+            var cityButton = $('<button>');
+
+            cityButton.text(cityArray[i]).css("text-transform", "capitalize");
+            cityButton.addClass("btn btn-sm custom-btn my-1 city-button");
+
+            citySearchEl.append(cityButton);
+        }
+
+        cityButtonFunctional();
+    }
+}
 
 function handleFormSubmit(event) {
     event.preventDefault();
 
-    if (cityEl.val() === "") {
-        console.log("Please enter a city name")
-    }
+    var city = cityEl.val();
 
-    currentEl.text(cityEl.val() + dayjs().format(" (MM/D/YYYY)"))
+    if (city == "") {
+        console.log("Please enter a city name")
+    } else {
+
+        cityEl.val('');        
+
+        getLatAndLon(city);
+    }   
 }
+
+function cityButtonFunctional() {
+
+    // creating a variable from all elements with the class "city-button"
+    var cityButtonEl = $(".city-button");
+  
+    // listener for click events on any city button
+    cityButtonEl.on('click', function (event) {
+  
+        var city = $(this)[0].textContent;
+        getLatAndLon(city);
+    })
+}
+
+initPrevSearchButtons();
 
 
 // Submit event on the form
 formEl.on('submit', handleFormSubmit);
+
