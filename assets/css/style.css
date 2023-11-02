@@ -25,6 +25,12 @@ header {
     color: white;
 }
 
+.city-button{
+    width: 100%;
+    background-color: #515866;
+    color: white;
+}
+
 .spacer{
     height: 1px;
     width: 100%;

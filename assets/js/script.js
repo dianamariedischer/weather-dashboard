@@ -19,7 +19,8 @@ function displayForecast(lat, lon) {
             } else {
                 var x = 8*i-1;
             }
-
+            
+            $('#day-' + i + '-icon').attr("src", "http://openweathermap.org/img/w/" + data.list[x].weather[0].icon + ".png");
             $('#day-' + i + '-temp').append(data.list[x].main.temp + "°F");
             $('#day-' + i + '-wind').append(data.list[x].wind.speed + " MPH");
             $('#day-' + i + '-humidity').append(data.list[x].main.humidity + "%")
@@ -56,7 +57,7 @@ function getLatAndLon(city){
                     var cityButton = $('<button>');
 
                     cityButton.text(city).css("text-transform", "capitalize");
-                    cityButton.addClass("btn btn-sm custom-btn my-1 city-button");
+                    cityButton.addClass("btn btn-sm city-button my-1");
 
                     citySearchEl.append(cityButton);
                     cityButtonFunctional();
@@ -70,7 +71,7 @@ function getLatAndLon(city){
                 var cityButton = $('<button>');
 
                 cityButton.text(city).css("text-transform", "capitalize");
-                cityButton.addClass("btn btn-sm custom-btn my-1 city-button");
+                cityButton.addClass("btn btn-sm city-button my-1");
 
                 citySearchEl.append(cityButton);
                 cityButtonFunctional();
@@ -109,12 +110,14 @@ fetch('https://api.ipgeolocation.io/ipgeo?apiKey=a1d419df10e64b8e9710e164ca9b610
             var forecastColEl = $('<div>');
             var forecastContentEl = $('<div>');
             var dateEl = $('<h6>');
+            var iconEl = $('<img>');
             var tempEl = $('<p>');
             var windEl = $('<p>');
             var humidityEl = $('<p>');
             
             dateEl.text(dayjs().add(i, 'day').format("MM/D/YYYY"));
 
+            iconEl.attr("id", "day-" + i + "-icon");
             tempEl.text("Temp: ");
             tempEl.attr("id", "day-" + i + "-temp");
             windEl.text("Wind: ");
@@ -126,7 +129,7 @@ fetch('https://api.ipgeolocation.io/ipgeo?apiKey=a1d419df10e64b8e9710e164ca9b610
             forecastContentEl.addClass("p-3 weather-card")
             forecastColEl.addClass("col");
 
-            forecastContentEl.append(dateEl, tempEl, windEl, humidityEl);
+            forecastContentEl.append(dateEl, iconEl, tempEl, windEl, humidityEl);
             forecastColEl.append(forecastContentEl);
             $('#forecast-row').append(forecastColEl);
             
@@ -154,7 +157,7 @@ function initPrevSearchButtons(){
             var cityButton = $('<button>');
 
             cityButton.text(cityArray[i]).css("text-transform", "capitalize");
-            cityButton.addClass("btn btn-sm custom-btn my-1 city-button");
+            cityButton.addClass("btn btn-sm city-button my-1");
 
             citySearchEl.append(cityButton);
         }
