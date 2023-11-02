@@ -88,7 +88,7 @@ function getLatAndLon(city){
 
             displayForecast(data[0].lat, data[0].lon);
         } else {
-            console.log("Couldn't find that city!")
+            alert ("Couldn't find that city!")
         }
 
         
@@ -172,7 +172,7 @@ function handleFormSubmit(event) {
     var city = cityEl.val();
 
     if (city == "") {
-        console.log("Please enter a city name")
+        alert ("Please enter a city name")
     } else {
 
         cityEl.val('');        
