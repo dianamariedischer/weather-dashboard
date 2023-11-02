@@ -14,85 +14,96 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
+    <!-- Header for the page -->
     <header>
         <h1>Weather Dashboard</h1>
     </header>
 
-    <div class="container">
+    <!-- Main content -->
+    <main class="container">
         <div class="row">
+            <!-- First column, quarter of the page, contains city search form -->
             <div class="col-md-3">
                 <h3>Search for a city:</h3>
-                <form>
-                    <input type="text" id="fname" name="fname">
+                <form id="city-form">
+                    <input type="text" id="city" name="city" placeholder="Prague">
+                    <button class="btn btn-sm custom-btn">Search</button>
                 </form>
-                <button type="button" class="btn btn-sm custom-btn">Search</button>
                 <div class="spacer my-3"></div>
             </div>
          
-
+            <!-- Second column, three quarters of the page, has current weather for city and 5-day forecast -->
             <div class="col-md-9">
-                <div class="city-box">
-                    <h2>Atlanta (11/1/2023)</h2>
-                    <p>Temp: 60.660F</p>
-                    <p>Wind: 3.91 MPH</p>
-                    <p>Humidity: 64 %</p>
+                <!-- box for current day -->
+                <div class="current-forecast">
+                    <h2 id="current"></h2>
+                    <p id="current-temp">Temp: </p>
+                    <p id="current-wind">Wind: </p>
+                    <p id="current-humidity">Humidity: </p>
                 </div>
+                <!-- five day forecast header and columns, no horizontal padding -->
                 <div class="container px-0">
                     <h4>5-day Forecast:</h4>
-                    <div class="row flex-column flex-md-row d-flex flex-md-row flex-md-nowrap g-2">
+                    <!-- forecast columns with gutter, turn into a non wrapping row starting with medium screens -->
+                    <div class="row flex-column d-flex flex-md-row flex-md-nowrap g-2">
                         <div class="col">
                             <div class="p-3 weather-card">
-                                <h6>11/1/2023</h6>
-                                <p>Temp: 60.660F</p>
-                                <p>Wind: 3.91 MPH</p>
-                                <p>Humidity: 64 %</p>
+                                <h6 id="day-1"></h6>
+                                <p id="day-1-temp">Temp: </p>
+                                <p id="day-1-wind">Wind: </p>
+                                <p id="day-1-humidity">Humidity: </p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-3 weather-card">
-                                <h6>11/1/2023</h6>
-                                <p>Temp: 60.660F</p>
-                                <p>Wind: 3.91 MPH</p>
-                                <p>Humidity: 64 %</p>
+                                <h6 id="day-2"></h6>
+                                <p id="day-2-temp">Temp: </p>
+                                <p id="day-2-wind">Wind: </p>
+                                <p id="day-2-humidity">Humidity: </p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-3 weather-card">
-                                <h6>11/1/2023</h6>
-                                <p>Temp: 60.660F</p>
-                                <p>Wind: 3.91 MPH</p>
-                                <p>Humidity: 64 %</p>
+                                <h6 id="day-3"></h6>
+                                <p id="day-3-temp">Temp: </p>
+                                <p id="day-3-wind">Wind: </p>
+                                <p id="day-3-humidity">Humidity: </p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-3 weather-card">
-                                <h6>11/1/2023</h6>
-                                <p>Temp: 60.660F</p>
-                                <p>Wind: 3.91 MPH</p>
-                                <p>Humidity: 64 %</p>
+                                <h6 id="day-4"></h6>
+                                <p id="day-4-temp">Temp: </p>
+                                <p id="day-4-wind">Wind: </p>
+                                <p id="day-4-humidity">Humidity: </p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-3 weather-card">
-                                <h6>11/1/2023</h6>
-                                <p>Temp: 60.660F</p>
-                                <p>Wind: 3.91 MPH</p>
-                                <p>Humidity: 64 %</p>
+                                <h6 id="day-5"></h6>
+                                <p id="day-5-temp">Temp: </p>
+                                <p id="day-5-wind">Wind: </p>
+                                <p id="day-5-humidity">Humidity: </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    
-
+    <!-- dayjs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js" 
+    integrity="sha512-FwNWaxyfy2XlEINoSnZh1JQ5TRRtGow0D6XcmAWmYCRgvqOUTnzCxPc9uF35u5ZEpirk1uhlPVA19tflhvnW1g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- bootstrap -->
     <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
     ></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

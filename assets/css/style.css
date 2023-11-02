@@ -15,7 +15,7 @@ header {
     margin-top: 15px;
 }
 
-.city-box{
+.current-forecast{
     border: black solid 1px;
     padding: 5px;
 }
@@ -31,7 +31,7 @@ header {
     background-color: #2f3c56;
 }
 
-#fname{
+#city{
     width: 100%;
     margin-bottom: 10px;
 }
