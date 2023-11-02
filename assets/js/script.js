@@ -16,30 +16,12 @@ function displayForecast(lat, lon) {
         $('#current-wind').append(data.list[0].wind.speed + " MPH");
         $('#current-humidity').append(data.list[0].main.humidity + "%");
 
-        // day 1 weather data
-        $('#day-1-temp').append(data.list[7].main.temp + "°F");
-        $('#day-1-wind').append(data.list[7].wind.speed + " MPH");
-        $('#day-1-humidity').append(data.list[7].main.humidity + "%");
-
-        // day 2 weather data
-        $('#day-2-temp').append(data.list[15].main.temp + "°F");
-        $('#day-2-wind').append(data.list[15].wind.speed + " MPH");
-        $('#day-2-humidity').append(data.list[15].main.humidity + "%");
-
-        // day 3 weather data
-        $('#day-3-temp').append(data.list[23].main.temp + "°F");
-        $('#day-3-wind').append(data.list[23].wind.speed + " MPH");
-        $('#day-3-humidity').append(data.list[23].main.humidity + "%");
-
-        // day 4 weather data
-        $('#day-4-temp').append(data.list[31].main.temp + "°F");
-        $('#day-4-wind').append(data.list[31].wind.speed + " MPH");
-        $('#day-4-humidity').append(data.list[31].main.humidity + "%");
-
-        // day 5 weather data
-        $('#day-5-temp').append(data.list[39].main.temp + "°F");
-        $('#day-5-wind').append(data.list[39].wind.speed + " MPH");
-        $('#day-5-humidity').append(data.list[39].main.humidity + "%");
+        // 5 day forecast
+        for(i = 1; i < 6; i++){
+            $('#day-' + i + '-temp').append(data.list[8*i-1].main.temp + "°F");
+            $('#day-' + i + '-wind').append(data.list[8*i-1].wind.speed + " MPH");
+            $('#day-' + i + '-humidity').append(data.list[8*i-1].main.humidity + "%")
+        }
     }
     );
 
@@ -66,12 +48,35 @@ fetch('https://api.ipgeolocation.io/ipgeo?apiKey=a1d419df10e64b8e9710e164ca9b610
     // display their city and the current day using dayjs
     .then(function (data) {
         currentEl.text(data.city + dayjs().format(" (MM/D/YYYY)"));
-        // add the dates to the forecast columns
-        $('#day-1').text(dayjs().add(1, 'day').format("MM/D/YYYY"));
-        $('#day-2').text(dayjs().add(2, 'day').format("MM/D/YYYY"));
-        $('#day-3').text(dayjs().add(3, 'day').format("MM/D/YYYY"));
-        $('#day-4').text(dayjs().add(4, 'day').format("MM/D/YYYY"));
-        $('#day-5').text(dayjs().add(5, 'day').format("MM/D/YYYY"));
+        
+        // add forecast columns to the page with initial content
+        for(i = 1; i < 6; i++) {
+            var forecastColEl = $('<div>');
+            var forecastContentEl = $('<div>');
+            var dateEl = $('<h6>');
+            var tempEl = $('<p>');
+            var windEl = $('<p>');
+            var humidityEl = $('<p>');
+            
+            dateEl.text(dayjs().add(i, 'day').format("MM/D/YYYY"));
+
+            tempEl.text("Temp: ");
+            tempEl.attr("id", "day-" + i + "-temp");
+            windEl.text("Wind: ");
+            windEl.attr("id", "day-" + i + "-wind");
+            humidityEl.text("Humidity: ");
+            humidityEl.attr("id", "day-" + i + "-humidity");
+
+
+            forecastContentEl.addClass("p-3 weather-card")
+            forecastColEl.addClass("col");
+
+            forecastContentEl.append(dateEl, tempEl, windEl, humidityEl);
+            forecastColEl.append(forecastContentEl);
+            $('#forecast-row').append(forecastColEl);
+            
+        }
+
         // call display forecast using city found with ip address
         getLatAndLon(data.city);
     }
