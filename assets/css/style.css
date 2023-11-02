@@ -1,0 +1,37 @@
+header {
+    background-image: linear-gradient(to right, #465bb8, #25135f);
+    text-align: center;
+    color: white;
+    padding: 5px;
+}
+
+.custom-btn{
+    width: 100%;
+    background-color: #5f74d0;
+    color: white;
+}
+
+.container{
+    margin-top: 15px;
+}
+
+.city-box{
+    border: black solid 1px;
+    padding: 5px;
+}
+
+.weather-card{
+    background-color: #2f3c56;
+    color: white;
+}
+
+.spacer{
+    height: 1px;
+    width: 100%;
+    background-color: #2f3c56;
+}
+
+#fname{
+    width: 100%;
+    margin-bottom: 10px;
+}
