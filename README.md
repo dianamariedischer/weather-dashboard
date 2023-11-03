@@ -4,7 +4,7 @@
 A site that shows a 5-day weather forecast for different cities utilizing API calls.
 
 ## Screenshot of Webpage
-![screenshot of weather dashboard](IMG_5518.jpeg)
+![screenshot of weather dashboard](<Screenshot 2023-11-03 at 5.02.10 AM.png>)
 https://dianamariedischer.github.io/weather-dashboard/
 
 ## Usage
